@@ -16,14 +16,19 @@ struct record {
 	int score = 0; // score is and int number given to player
 };
 
-
-
-int main()
+// this function prints the results from the array which size is fixed
+void printr(record(&list)[N])
 {
-	record playerlist[N];
+	for (int i = 0; i < N; i++)
+	{
+		cout << right << setfill(' ') << setw(2) << i + 1 << ' ' << left << setfill('.') << setw(15) << list[i].name << list[i].score << "\n";
+	}
+}
 
-	// Read data from console into the array of struct
-	while(true) {
+// this function lets the user to fill data into the array of given length
+void readusr(record(&list)[N])
+{
+	while (true) {
 		unsigned int n; // the player number we edit
 		cout << "player number ? max: " << N << ", to quit type in 0." << "\n";
 		cin >> n; // Player number : 1-10
@@ -31,16 +36,21 @@ int main()
 		else {
 			cout << "palyer name ? max 10 characters" << "\n";
 			cin.ignore(256, '\n');  // the enter from the cout is still in the stream so we ignore it and cin work properly
-			cin.getline(playerlist[n-1].name, l + 1); // reading l characters into name, until we reach a \n. 
+			cin.getline(list[n - 1].name, l + 1); // reading l characters into name, until we reach a \n. 
 			cout << "player score? " << "\n";
-			cin >> playerlist[n-1].score;
-
-			for (int i = 0; i < N; i++)
-			{
-				cout<< right<< setfill(' ') << setw(2) << i + 1 << ' ' << left << setfill('.') << setw(15) << playerlist[i].name << playerlist[i].score << "\n";
-			}
+			cin >> list[n - 1].score;
+			printr(list);
 		}
 	}
+}
+
+int main()
+{
+	record playerlist[N];
+	record (&list)[N] = playerlist; // reference for the list
+
+	// Read data from console into the array of struct
+	readusr(list);
 
 	string s;
 	getline(cin, s);
