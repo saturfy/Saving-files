@@ -44,6 +44,24 @@ void readusr(record(&list)[N])
 	}
 }
 
+void savelist(record (&list)[N])
+{
+	// we open a file for saving the data
+	ofstream out ("data.txt");
+	if (out.is_open()) // checking the file
+	{
+		// writing the elements of on struct object from the list into one line so we will have N number of lines
+		for (int i = 0; i < N; i++)
+		{
+			out << list[i].name << ' ' << list[i].score << "\n";
+		}
+		cout << "Saving is succesful" << "\n";
+		out.close();
+	}
+	else cout << "cannot open file" << "\n";
+}
+
+
 int main()
 {
 	record playerlist[N];
@@ -51,6 +69,9 @@ int main()
 
 	// Read data from console into the array of struct
 	readusr(list);
+
+	// Save data into the file
+	savelist(list);
 
 	string s;
 	getline(cin, s);
